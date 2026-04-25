@@ -10,18 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Preloader ---------- */
   const preloader = document.querySelector('.preloader');
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      preloader.classList.add('hidden');
-      initHeroAnimations();
-    }, 1500); // Artificial delay to show off preloader
-  });
+  let preloaderRemoved = false;
+  
+  function removePreloader() {
+    if (preloaderRemoved) return;
+    preloaderRemoved = true;
+    if (preloader) preloader.classList.add('hidden');
+    initHeroAnimations();
+  }
+
+  // Use DOMContentLoaded instead of load so it doesn't wait for external assets forever
+  // Also add a fallback timeout just in case
+  setTimeout(removePreloader, 2000);
+  window.addEventListener('load', removePreloader);
 
   /* ---------- Custom Magnetic Cursor ---------- */
   const cursor = document.querySelector('.cursor');
   const follower = document.querySelector('.cursor-follower');
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || ('ontouchstart' in window);
   
-  if (cursor && follower && window.matchMedia("(pointer: fine)").matches) {
+  if (!isTouchDevice && cursor && follower) {
     let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
 
@@ -188,8 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
     draw();
   }
   
-  // Initialize particles
-  initParticles('particle-canvas', 50, '168, 85, 247'); // Purple tint for hero
+  // Initialize particles (fewer on mobile for performance)
+  const particleCount = isTouchDevice ? 15 : 50;
+  initParticles('particle-canvas', particleCount, '168, 85, 247'); // Purple tint for hero
 
   /* ---------- GSAP Scroll Animations ---------- */
   
@@ -309,18 +318,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Feature Cards Glow Follow ---------- */
-  document.querySelectorAll('.feature-card').forEach(card => {
-    const glow = card.querySelector('.glow-blob');
-    if (glow) {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        glow.style.left = `${x}px`;
-        glow.style.top = `${y}px`;
-      });
-    }
-  });
+  if (!isTouchDevice) {
+    document.querySelectorAll('.feature-card').forEach(card => {
+      const glow = card.querySelector('.glow-blob');
+      if (glow) {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          glow.style.left = `${x}px`;
+          glow.style.top = `${y}px`;
+        });
+      }
+    });
+  }
 
   /* ---------- Pricing Toggle ---------- */
   const toggleInput = document.getElementById('pricing-checkbox');
