@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,52 +7,26 @@
   <meta name="description" content="Nova is the premier AI-powered analytics platform. Unlock real-time insights, predictive intelligence, and beautiful dashboards for your business." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
-  
-  <!-- GSAP & ScrollTrigger CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-
-  <!-- Preloader -->
-  <div class="preloader">
-    <div class="preloader-content">
-      <div class="logo-icon loader-logo">N</div>
-      <div class="loader-text">Loading the future...</div>
-    </div>
-  </div>
-
-  <!-- Custom Cursor -->
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
-
-  <!-- Scroll Progress -->
-  <div id="scroll-progress"></div>
-
-  <!-- Background Aurora Mesh -->
-  <div class="aurora-bg">
-    <div class="aurora aurora-1"></div>
-    <div class="aurora aurora-2"></div>
-    <div class="aurora aurora-3"></div>
-  </div>
 
   <!-- ==================== NAVBAR ==================== -->
   <nav id="navbar">
     <div class="container nav-inner">
-      <a href="#" class="nav-logo" data-cursor="hover">
+      <a href="#" class="nav-logo">
         <div class="logo-icon">N</div>
         <span>Nova</span>
       </a>
 
       <div class="nav-links">
-        <a href="#features" data-cursor="hover">Features</a>
-        <a href="#how-it-works" data-cursor="hover">How It Works</a>
-        <a href="#pricing" data-cursor="hover">Pricing</a>
-        <a href="#testimonials" data-cursor="hover">Reviews</a>
-        <a href="#" class="nav-cta" data-cursor="hover">Get Started</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#" class="nav-cta">Get Started</a>
       </div>
 
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" data-cursor="hover">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -69,35 +43,35 @@
 
   <!-- ==================== HERO ==================== -->
   <section class="hero" id="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+
     <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-badge reveal-item">
+      <div class="hero-content reveal">
+        <div class="hero-badge">
           <span class="badge-dot"></span>
           Now in Public Beta
         </div>
-        <h1 class="split-text">
+        <h1>
           Analytics That<br />
           <span class="gradient-text">Think Ahead</span>
         </h1>
-        <p class="reveal-item">
+        <p>
           Nova harnesses predictive AI to transform raw data into actionable foresight — so you can make decisions before the market does.
         </p>
-        <div class="hero-actions reveal-item">
-          <a href="#" class="btn-primary" data-cursor="hover">
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">
             Start Free Trial
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
-          <a href="#how-it-works" class="btn-secondary" data-cursor="hover">
+          <a href="#how-it-works" class="btn-secondary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             See How It Works
           </a>
         </div>
       </div>
 
-      <div class="hero-visual">
-        <canvas id="particle-canvas"></canvas>
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
+      <div class="hero-visual reveal delay-2">
         <div class="hero-mockup">
           <div class="mockup-header">
             <span class="mockup-dot"></span>
@@ -126,23 +100,8 @@
   <!-- ==================== LOGO STRIP ==================== -->
   <section class="logos-section">
     <div class="container text-center">
-      <p class="section-label g-reveal">Trusted by innovative teams</p>
-    </div>
-    <div class="marquee-container g-reveal">
-      <div class="marquee-content">
-        <span class="logo-item">Stripe</span>
-        <span class="logo-item">Vercel</span>
-        <span class="logo-item">Notion</span>
-        <span class="logo-item">Linear</span>
-        <span class="logo-item">Figma</span>
-        <span class="logo-item">Raycast</span>
-        <!-- Duplicate for infinite effect -->
-        <span class="logo-item">Stripe</span>
-        <span class="logo-item">Vercel</span>
-        <span class="logo-item">Notion</span>
-        <span class="logo-item">Linear</span>
-        <span class="logo-item">Figma</span>
-        <span class="logo-item">Raycast</span>
+      <p class="section-label reveal" style="margin-bottom:28px;">Trusted by innovative teams</p>
+      <div class="logos-strip reveal delay-1">
         <span class="logo-item">Stripe</span>
         <span class="logo-item">Vercel</span>
         <span class="logo-item">Notion</span>
@@ -156,117 +115,45 @@
   <!-- ==================== FEATURES ==================== -->
   <section class="features" id="features">
     <div class="container text-center">
-      <p class="section-label g-reveal">Features</p>
-      <h2 class="section-title g-reveal">Everything you need to <span class="gradient-text">scale</span></h2>
-      <p class="section-desc g-reveal">From real-time dashboards to predictive models — Nova gives your team superpowers.</p>
+      <p class="section-label reveal">Features</p>
+      <h2 class="section-title reveal delay-1">Everything you need to <span class="gradient-text">scale</span></h2>
+      <p class="section-desc reveal delay-2">From real-time dashboards to predictive models — Nova gives your team superpowers.</p>
 
       <div class="features-grid">
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-purple">⚡</div>
-            <h3 class="feature-title">Real-Time Dashboards</h3>
-            <p class="feature-desc">Live metrics that update every second with zero-lag streaming and beautiful visualizations.</p>
-          </div>
+        <div class="feature-card reveal delay-1">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Real-Time Dashboards</h3>
+          <p class="feature-desc">Live metrics that update every second with zero-lag streaming and beautiful visualizations.</p>
         </div>
 
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-cyan">🧠</div>
-            <h3 class="feature-title">Predictive AI Engine</h3>
-            <p class="feature-desc">Machine-learning models that forecast trends, detect anomalies, and suggest optimizations automatically.</p>
-          </div>
+        <div class="feature-card reveal delay-2">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">Predictive AI Engine</h3>
+          <p class="feature-desc">Machine-learning models that forecast trends, detect anomalies, and suggest optimizations automatically.</p>
         </div>
 
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-pink">🔗</div>
-            <h3 class="feature-title">200+ Integrations</h3>
-            <p class="feature-desc">Connect every data source — from databases and APIs to spreadsheets — in under 60 seconds.</p>
-          </div>
+        <div class="feature-card reveal delay-3">
+          <div class="feature-icon">🔗</div>
+          <h3 class="feature-title">200+ Integrations</h3>
+          <p class="feature-desc">Connect every data source — from databases and APIs to spreadsheets — in under 60 seconds.</p>
         </div>
 
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-blue">🛡️</div>
-            <h3 class="feature-title">Enterprise Security</h3>
-            <p class="feature-desc">SOC 2 Type II certified with end-to-end encryption, SSO, and granular access controls.</p>
-          </div>
+        <div class="feature-card reveal delay-1">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Enterprise Security</h3>
+          <p class="feature-desc">SOC 2 Type II certified with end-to-end encryption, SSO, and granular access controls.</p>
         </div>
 
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-cyan">📊</div>
-            <h3 class="feature-title">Custom Reports</h3>
-            <p class="feature-desc">Drag-and-drop report builder with scheduled exports to Slack, email, or any webhook.</p>
-          </div>
+        <div class="feature-card reveal delay-2">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Custom Reports</h3>
+          <p class="feature-desc">Drag-and-drop report builder with scheduled exports to Slack, email, or any webhook.</p>
         </div>
 
-        <div class="feature-card feature-tilt g-stagger" data-cursor="hover">
-          <div class="glow-blob"></div>
-          <div class="feature-content">
-            <div class="feature-icon icon-purple">🚀</div>
-            <h3 class="feature-title">Blazing Fast</h3>
-            <p class="feature-desc">Query billions of rows in milliseconds using our distributed columnar engine.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== HORIZONTAL SCROLL SHOWCASE (NEW) ==================== -->
-  <section class="h-scroll-section" id="showcase">
-    <div class="h-scroll-container">
-      <div class="h-scroll-panel">
-        <div class="h-panel-content">
-          <h2 class="section-title">Deep <span class="gradient-text">Insights</span></h2>
-          <p class="section-desc">Dive into your data like never before with interactive, multi-dimensional charts.</p>
-        </div>
-        <div class="h-panel-visual insight-visual">
-           <div class="insight-chart">
-               <div class="donut-chart"></div>
-               <div class="donut-inner"></div>
-           </div>
-        </div>
-      </div>
-      <div class="h-scroll-panel">
-        <div class="h-panel-content">
-          <h2 class="section-title">Global <span class="gradient-text">Reach</span></h2>
-          <p class="section-desc">Monitor your global presence in real-time across all regions and availability zones.</p>
-        </div>
-        <div class="h-panel-visual reach-visual">
-            <div class="world-map">
-                <div class="map-node n1"></div>
-                <div class="map-node n2"></div>
-                <div class="map-node n3"></div>
-                <div class="map-connector"></div>
-            </div>
-        </div>
-      </div>
-      <div class="h-scroll-panel">
-        <div class="h-panel-content">
-          <h2 class="section-title">Smart <span class="gradient-text">Alerts</span></h2>
-          <p class="section-desc">Get notified instantly when metrics deviate from AI-predicted baselines.</p>
-        </div>
-        <div class="h-panel-visual alert-visual">
-           <div class="alert-box">
-             <div class="alert-icon">⚠️</div>
-             <div class="alert-text">
-               <div class="a-title">Anomaly Detected</div>
-               <div class="a-desc">Traffic spike in EU-West-1</div>
-             </div>
-           </div>
-           <div class="alert-box">
-             <div class="alert-icon success">✅</div>
-             <div class="alert-text">
-               <div class="a-title">System Stable</div>
-               <div class="a-desc">All metrics nominal</div>
-             </div>
-           </div>
+        <div class="feature-card reveal delay-3">
+          <div class="feature-icon">🚀</div>
+          <h3 class="feature-title">Blazing Fast</h3>
+          <p class="feature-desc">Query billions of rows in milliseconds using our distributed columnar engine.</p>
         </div>
       </div>
     </div>
@@ -276,76 +163,20 @@
   <section class="stats">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-card g-stagger">
-          <div class="stat-ring">
-             <svg class="progress-ring" width="120" height="120">
-               <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <circle class="progress-ring__circle" stroke="url(#gradient-purple)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <defs>
-                 <linearGradient id="gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stop-color="#a855f7" />
-                   <stop offset="100%" stop-color="#ec4899" />
-                 </linearGradient>
-               </defs>
-             </svg>
-             <div class="stat-inner">
-               <div class="stat-number count-up" data-target="12000" data-suffix="+">0</div>
-             </div>
-          </div>
+        <div class="stat-card reveal">
+          <div class="stat-number" data-target="12000" data-suffix="+">0</div>
           <div class="stat-label">Active Teams</div>
         </div>
-        <div class="stat-card g-stagger">
-           <div class="stat-ring">
-             <svg class="progress-ring" width="120" height="120">
-               <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <circle class="progress-ring__circle" stroke="url(#gradient-cyan)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <defs>
-                 <linearGradient id="gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stop-color="#22d3ee" />
-                   <stop offset="100%" stop-color="#6366f1" />
-                 </linearGradient>
-               </defs>
-             </svg>
-             <div class="stat-inner">
-               <div class="stat-number count-up" data-target="99" data-suffix=".9%">0</div>
-             </div>
-          </div>
+        <div class="stat-card reveal delay-1">
+          <div class="stat-number" data-target="99" data-suffix=".9%">0</div>
           <div class="stat-label">Uptime SLA</div>
         </div>
-        <div class="stat-card g-stagger">
-           <div class="stat-ring">
-             <svg class="progress-ring" width="120" height="120">
-               <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <circle class="progress-ring__circle" stroke="url(#gradient-pink)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <defs>
-                 <linearGradient id="gradient-pink" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stop-color="#ec4899" />
-                   <stop offset="100%" stop-color="#a855f7" />
-                 </linearGradient>
-               </defs>
-             </svg>
-             <div class="stat-inner">
-               <div class="stat-number count-up" data-target="4" data-suffix="B+">0</div>
-             </div>
-          </div>
+        <div class="stat-card reveal delay-2">
+          <div class="stat-number" data-target="4" data-suffix="B+">0</div>
           <div class="stat-label">Events Processed Daily</div>
         </div>
-        <div class="stat-card g-stagger">
-           <div class="stat-ring">
-             <svg class="progress-ring" width="120" height="120">
-               <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <circle class="progress-ring__circle" stroke="url(#gradient-blue)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-               <defs>
-                 <linearGradient id="gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stop-color="#6366f1" />
-                   <stop offset="100%" stop-color="#22d3ee" />
-                 </linearGradient>
-               </defs>
-             </svg>
-             <div class="stat-inner">
-               <div class="stat-number count-up" data-target="50" data-suffix="ms">0</div>
-             </div>
-          </div>
+        <div class="stat-card reveal delay-3">
+          <div class="stat-number" data-target="50" data-suffix="ms">0</div>
           <div class="stat-label">Avg. Query Latency</div>
         </div>
       </div>
@@ -355,33 +186,25 @@
   <!-- ==================== HOW IT WORKS ==================== -->
   <section class="how-it-works" id="how-it-works">
     <div class="container text-center">
-      <p class="section-label g-reveal">How It Works</p>
-      <h2 class="section-title g-reveal">Up and running in <span class="gradient-text">minutes</span></h2>
-      <p class="section-desc g-reveal">No complex setup. No engineering overhead. Just connect and start exploring.</p>
+      <p class="section-label reveal">How It Works</p>
+      <h2 class="section-title reveal delay-1">Up and running in <span class="gradient-text">minutes</span></h2>
+      <p class="section-desc reveal delay-2">No complex setup. No engineering overhead. Just connect and start exploring.</p>
 
-      <div class="steps-timeline">
-        <div class="timeline-line">
-           <div class="timeline-progress"></div>
+      <div class="steps-grid">
+        <div class="step-card reveal delay-1">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Connect Your Data</h3>
+          <p class="step-desc">Link your databases, APIs, or cloud services with our one-click connectors.</p>
         </div>
-        <div class="steps-grid">
-          <div class="step-card timeline-step">
-            <div class="step-node"></div>
-            <div class="step-number">01</div>
-            <h3 class="step-title">Connect Your Data</h3>
-            <p class="step-desc">Link your databases, APIs, or cloud services with our one-click connectors.</p>
-          </div>
-          <div class="step-card timeline-step">
-            <div class="step-node"></div>
-            <div class="step-number">02</div>
-            <h3 class="step-title">Build Dashboards</h3>
-            <p class="step-desc">Use our intuitive drag-and-drop builder to create stunning visualizations.</p>
-          </div>
-          <div class="step-card timeline-step">
-            <div class="step-node"></div>
-            <div class="step-number">03</div>
-            <h3 class="step-title">Unlock Insights</h3>
-            <p class="step-desc">Let Nova's AI surface hidden patterns and deliver predictive forecasts.</p>
-          </div>
+        <div class="step-card reveal delay-2">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Build Dashboards</h3>
+          <p class="step-desc">Use our intuitive drag-and-drop builder to create stunning visualizations.</p>
+        </div>
+        <div class="step-card reveal delay-3">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Unlock Insights</h3>
+          <p class="step-desc">Let Nova's AI surface hidden patterns and deliver predictive forecasts.</p>
         </div>
       </div>
     </div>
@@ -390,24 +213,15 @@
   <!-- ==================== PRICING ==================== -->
   <section class="pricing" id="pricing">
     <div class="container text-center">
-      <p class="section-label g-reveal">Pricing</p>
-      <h2 class="section-title g-reveal">Simple, <span class="gradient-text">transparent</span> pricing</h2>
-      <p class="section-desc g-reveal">Start free. Scale when you're ready. No hidden fees, ever.</p>
-
-      <div class="pricing-toggle g-reveal" data-cursor="hover">
-        <span class="toggle-label active" id="label-monthly">Monthly</span>
-        <div class="toggle-switch">
-          <input type="checkbox" id="pricing-checkbox" />
-          <label for="pricing-checkbox" class="toggle-slider"></label>
-        </div>
-        <span class="toggle-label" id="label-yearly">Yearly <span class="discount">-20%</span></span>
-      </div>
+      <p class="section-label reveal">Pricing</p>
+      <h2 class="section-title reveal delay-1">Simple, <span class="gradient-text">transparent</span> pricing</h2>
+      <p class="section-desc reveal delay-2">Start free. Scale when you're ready. No hidden fees, ever.</p>
 
       <div class="pricing-grid">
         <!-- Starter -->
-        <div class="pricing-card g-stagger">
+        <div class="pricing-card reveal delay-1">
           <p class="pricing-name">Starter</p>
-          <p class="pricing-price" data-monthly="$0" data-yearly="$0">$0 <span>/month</span></p>
+          <p class="pricing-price">$0 <span>/month</span></p>
           <p class="pricing-desc">Perfect for side projects and exploration.</p>
           <ul class="pricing-features">
             <li>3 dashboards</li>
@@ -415,32 +229,29 @@
             <li>Community support</li>
             <li>7-day data retention</li>
           </ul>
-          <a href="#" class="btn-pricing" data-cursor="hover">Get Started Free</a>
+          <a href="#" class="btn-pricing">Get Started Free</a>
         </div>
 
         <!-- Pro (popular) -->
-        <div class="pricing-card popular g-stagger">
-          <div class="shimmer-border"></div>
+        <div class="pricing-card popular reveal delay-2">
           <div class="popular-badge">Most Popular</div>
-          <div class="card-content">
-            <p class="pricing-name">Pro</p>
-            <p class="pricing-price" data-monthly="$49" data-yearly="$39">$49 <span>/month</span></p>
-            <p class="pricing-desc">For growing teams that need real power.</p>
-            <ul class="pricing-features">
-              <li>Unlimited dashboards</li>
-              <li>10M events/month</li>
-              <li>Predictive AI models</li>
-              <li>Priority support</li>
-              <li>90-day data retention</li>
-            </ul>
-            <a href="#" class="btn-pricing" data-cursor="hover">Start Pro Trial</a>
-          </div>
+          <p class="pricing-name">Pro</p>
+          <p class="pricing-price">$49 <span>/month</span></p>
+          <p class="pricing-desc">For growing teams that need real power.</p>
+          <ul class="pricing-features">
+            <li>Unlimited dashboards</li>
+            <li>10M events/month</li>
+            <li>Predictive AI models</li>
+            <li>Priority support</li>
+            <li>90-day data retention</li>
+          </ul>
+          <a href="#" class="btn-pricing">Start Pro Trial</a>
         </div>
 
         <!-- Enterprise -->
-        <div class="pricing-card g-stagger">
+        <div class="pricing-card reveal delay-3">
           <p class="pricing-name">Enterprise</p>
-          <p class="pricing-price" data-monthly="Custom" data-yearly="Custom">Custom</p>
+          <p class="pricing-price">Custom</p>
           <p class="pricing-desc">Tailored for large-scale deployments.</p>
           <ul class="pricing-features">
             <li>Everything in Pro</li>
@@ -449,71 +260,29 @@
             <li>Dedicated account manager</li>
             <li>Custom data retention</li>
           </ul>
-          <a href="#" class="btn-pricing" data-cursor="hover">Contact Sales</a>
+          <a href="#" class="btn-pricing">Contact Sales</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== TESTIMONIAL CAROUSEL ==================== -->
+  <!-- ==================== TESTIMONIAL ==================== -->
   <section class="testimonial" id="testimonials">
     <div class="container text-center">
-      <p class="section-label g-reveal">What People Say</p>
-      <h2 class="section-title g-reveal">Loved by <span class="gradient-text">thousands</span></h2>
+      <p class="section-label reveal">What People Say</p>
+      <h2 class="section-title reveal delay-1">Loved by <span class="gradient-text">thousands</span></h2>
 
-      <div class="testimonial-carousel g-reveal">
-        <div class="carousel-track">
-          <!-- Slide 1 -->
-          <div class="testimonial-card slide active">
-            <div class="quote-mark">"</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "Nova completely transformed how we approach data. The predictive insights alone saved us over $2M last quarter. It's like having a team of data scientists built into one platform."
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">A</div>
-              <div>
-                <p class="testimonial-name">Alex Chen</p>
-                <p class="testimonial-role">VP of Engineering, TechCorp</p>
-              </div>
-            </div>
+      <div class="testimonial-card reveal delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Nova completely transformed how we approach data. The predictive insights alone saved us over $2M last quarter. It's like having a team of data scientists built into one platform."
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <p class="testimonial-name">Alex Chen</p>
+            <p class="testimonial-role">VP of Engineering, TechCorp</p>
           </div>
-          <!-- Slide 2 -->
-          <div class="testimonial-card slide">
-            <div class="quote-mark">"</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "The setup was literally under 5 minutes. We connected our Postgres database and immediately had beautiful, real-time dashboards. The UI is simply gorgeous."
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar" style="background: var(--gradient-cta)">S</div>
-              <div>
-                <p class="testimonial-name">Sarah Jenkins</p>
-                <p class="testimonial-role">Data Lead, FinTech Startup</p>
-              </div>
-            </div>
-          </div>
-          <!-- Slide 3 -->
-          <div class="testimonial-card slide">
-            <div class="quote-mark">"</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "I've used every analytics tool on the market. Nova is the first one that feels like it was built for modern teams. The horizontal scaling handles our billions of events effortlessly."
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar" style="background: linear-gradient(135deg, #22d3ee, #3b82f6)">M</div>
-              <div>
-                <p class="testimonial-name">Michael Chang</p>
-                <p class="testimonial-role">CTO, E-Commerce Giant</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="carousel-nav">
-          <button class="dot active" data-index="0" aria-label="Slide 1" data-cursor="hover"></button>
-          <button class="dot" data-index="1" aria-label="Slide 2" data-cursor="hover"></button>
-          <button class="dot" data-index="2" aria-label="Slide 3" data-cursor="hover"></button>
         </div>
       </div>
     </div>
@@ -522,16 +291,13 @@
   <!-- ==================== FINAL CTA ==================== -->
   <section class="final-cta">
     <div class="container">
-      <div class="cta-box g-reveal">
-        <div class="cta-particles" id="cta-particles"></div>
-        <div class="cta-content">
-          <h2>Ready to see the <span class="gradient-text">future</span>?</h2>
-          <p>Join 12,000+ teams using Nova to turn data into decisions. Free for 14 days.</p>
-          <a href="#" class="btn-primary" data-cursor="hover">
-            Start Your Free Trial
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-        </div>
+      <div class="cta-box reveal">
+        <h2>Ready to see the <span class="gradient-text">future</span>?</h2>
+        <p>Join 12,000+ teams using Nova to turn data into decisions. Free for 14 days.</p>
+        <a href="#" class="btn-primary">
+          Start Your Free Trial
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -541,59 +307,48 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="#" class="nav-logo" data-cursor="hover">
+          <a href="#" class="nav-logo">
             <div class="logo-icon">N</div>
             <span>Nova</span>
           </a>
           <p>AI-powered analytics that help you see the future of your business.</p>
-          <div class="newsletter-form">
-            <input type="email" placeholder="Subscribe to updates" aria-label="Email address" data-cursor="text" />
-            <button type="submit" aria-label="Subscribe" data-cursor="hover">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
         </div>
 
         <div class="footer-col">
           <h4>Product</h4>
-          <a href="#" data-cursor="hover">Features</a>
-          <a href="#" data-cursor="hover">Pricing</a>
-          <a href="#" data-cursor="hover">Integrations</a>
-          <a href="#" data-cursor="hover">Changelog</a>
+          <a href="#">Features</a>
+          <a href="#">Pricing</a>
+          <a href="#">Integrations</a>
+          <a href="#">Changelog</a>
         </div>
 
         <div class="footer-col">
           <h4>Company</h4>
-          <a href="#" data-cursor="hover">About</a>
-          <a href="#" data-cursor="hover">Blog</a>
-          <a href="#" data-cursor="hover">Careers</a>
-          <a href="#" data-cursor="hover">Press</a>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
         </div>
 
         <div class="footer-col">
           <h4>Support</h4>
-          <a href="#" data-cursor="hover">Documentation</a>
-          <a href="#" data-cursor="hover">Help Center</a>
-          <a href="#" data-cursor="hover">Status</a>
-          <a href="#" data-cursor="hover">Contact</a>
+          <a href="#">Documentation</a>
+          <a href="#">Help Center</a>
+          <a href="#">Status</a>
+          <a href="#">Contact</a>
         </div>
       </div>
 
       <div class="footer-bottom">
         <span>© 2026 Nova Analytics. All rights reserved.</span>
         <div class="footer-social">
-          <a href="#" data-cursor="hover">Twitter</a>
-          <a href="#" data-cursor="hover">GitHub</a>
-          <a href="#" data-cursor="hover">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
         </div>
       </div>
     </div>
   </footer>
-
-  <!-- Back to top -->
-  <button id="back-to-top" aria-label="Back to top" data-cursor="hover">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
 
   <script src="js/main.js"></script>
 </body>
