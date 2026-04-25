@@ -8,6 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Register GSAP plugins
   gsap.registerPlugin(ScrollTrigger);
 
+  // Detect mobile/touch devices
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || ('ontouchstart' in window);
+  const isMobile = window.innerWidth <= 768;
+
+  // Mark body so CSS knows GSAP is available to hide elements for animation
+  // On mobile, skip GSAP-hidden states to prevent black screen
+  if (!isMobile) {
+    document.body.classList.add('gsap-ready');
+  }
+
   /* ---------- Preloader ---------- */
   const preloader = document.querySelector('.preloader');
   let preloaderRemoved = false;
@@ -15,95 +25,93 @@ document.addEventListener('DOMContentLoaded', () => {
   function removePreloader() {
     if (preloaderRemoved) return;
     preloaderRemoved = true;
-    if (preloader) preloader.classList.add('hidden');
-    initHeroAnimations();
+    if (preloader) {
+      preloader.classList.add('hidden');
+      // Remove from DOM after transition to free up resources
+      setTimeout(() => { if (preloader.parentNode) preloader.parentNode.removeChild(preloader); }, 600);
+    }
+    if (!isMobile) initHeroAnimations();
   }
 
-  // Use DOMContentLoaded instead of load so it doesn't wait for external assets forever
-  // Also add a fallback timeout just in case
-  setTimeout(removePreloader, 2000);
+  // Dismiss preloader fast — 300ms on mobile, 600ms on desktop
+  setTimeout(removePreloader, isMobile ? 100 : 600);
   window.addEventListener('load', removePreloader);
 
-  /* ---------- Custom Magnetic Cursor ---------- */
+  /* ---------- Custom Cursor (desktop only) ---------- */
   const cursor = document.querySelector('.cursor');
   const follower = document.querySelector('.cursor-follower');
-  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || ('ontouchstart' in window);
-  
-  if (!isTouchDevice && cursor && follower) {
+
+  if (!isTouchDevice && !isMobile && cursor && follower) {
+    document.body.classList.add('custom-cursor');
     let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
+    let cursorRAF;
 
     // Follow mouse
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
-      // Instant update for the small dot
-      cursor.style.left = `${mouseX}px`;
-      cursor.style.top = `${mouseY}px`;
-    });
+      cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+    }, { passive: true });
 
-    // Spring physics for follower ring
+    // Throttled spring physics for follower ring
     const renderFollower = () => {
       followerX += (mouseX - followerX) * 0.15;
       followerY += (mouseY - followerY) * 0.15;
-      follower.style.left = `${followerX}px`;
-      follower.style.top = `${followerY}px`;
-      requestAnimationFrame(renderFollower);
+      follower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
+      if (!document.hidden) cursorRAF = requestAnimationFrame(renderFollower);
     };
     renderFollower();
 
-    // Hover effects
-    document.querySelectorAll('[data-cursor="hover"]').forEach(el => {
-      el.addEventListener('mouseenter', () => {
+    // Pause cursor loop when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(cursorRAF);
+      } else {
+        renderFollower();
+      }
+    });
+
+    // Hover effects — use event delegation instead of per-element listeners
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('[data-cursor="hover"]')) {
         cursor.classList.add('hover-active');
         follower.classList.add('hover-active');
-      });
-      el.addEventListener('mouseleave', () => {
+      }
+    }, { passive: true });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('[data-cursor="hover"]')) {
         cursor.classList.remove('hover-active');
         follower.classList.remove('hover-active');
-      });
-    });
-
-    // Magnetic effect for buttons
-    document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta, .step-node, .dot').forEach(el => {
-      el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        gsap.to(el, {
-          x: x * 0.3,
-          y: y * 0.3,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      });
-      
-      el.addEventListener('mouseleave', () => {
-        gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-      });
-    });
+      }
+    }, { passive: true });
   }
 
-  /* ---------- Scroll Progress Bar ---------- */
+  /* ---------- Scroll Progress Bar + Navbar (combined, throttled) ---------- */
   const scrollProgress = document.getElementById('scroll-progress');
-  window.addEventListener('scroll', () => {
-    const scrollPx = document.documentElement.scrollTop;
-    const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollLen = (scrollPx / winHeightPx) * 100;
-    if(scrollProgress) scrollProgress.style.width = scrollLen + '%';
-  });
-
-  /* ---------- Navbar Scroll Effect ---------- */
   const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('back-to-top');
+  let scrollTicking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      const scrollPx = document.documentElement.scrollTop;
+      const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (scrollProgress) scrollProgress.style.width = (scrollPx / winHeightPx) * 100 + '%';
+      if (navbar) {
+        if (scrollPx > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }
+      if (backToTop) {
+        if (scrollPx > 500) backToTop.classList.add('visible');
+        else backToTop.classList.remove('visible');
+      }
+      scrollTicking = false;
+    });
+  }, { passive: true });
+
+
 
   /* ---------- Mobile Menu ---------- */
   const hamburger = document.getElementById('hamburger');
@@ -149,71 +157,24 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  /* ---------- Canvas Particles (Hero & CTA) ---------- */
-  function initParticles(canvasId, particleCount, colorStr) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = canvas.offsetWidth;
-    let height = canvas.height = canvas.offsetHeight;
-    
-    window.addEventListener('resize', () => {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-    });
+  /* ---------- Canvas Particles — REMOVED for performance ---------- */
+  // Particle canvas is hidden via CSS. No JS animation loop needed.
 
-    const particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.5 + 0.1
-      });
-    }
+  /* ---------- GSAP Scroll Animations (desktop only) ---------- */
+  if (!isMobile) {
 
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${colorStr}, ${p.alpha})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-  }
-  
-  // Initialize particles (fewer on mobile for performance)
-  const particleCount = isTouchDevice ? 15 : 50;
-  initParticles('particle-canvas', particleCount, '168, 85, 247'); // Purple tint for hero
-
-  /* ---------- GSAP Scroll Animations ---------- */
-  
   // Standard Reveals
   gsap.utils.toArray('.g-reveal').forEach(element => {
     gsap.fromTo(element, 
-      { y: 50, opacity: 0 },
+      { y: 40, opacity: 0 },
       { 
         y: 0, opacity: 1, 
-        duration: 1, 
+        duration: 0.8, 
         ease: "power3.out",
         scrollTrigger: {
           trigger: element,
           start: "top 85%",
-          toggleActions: "play none none reverse"
+          toggleActions: "play none none none"
         }
       }
     );
@@ -225,23 +186,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (grid) {
       const items = grid.querySelectorAll('.g-stagger');
       gsap.fromTo(items,
-        { y: 60, opacity: 0 },
+        { y: 40, opacity: 0 },
         {
           y: 0, opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
+          duration: 0.6,
+          stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: grid,
             start: "top 80%",
-            toggleActions: "play none none reverse"
+            toggleActions: "play none none none"
           }
         }
       );
     }
   });
 
-  // Horizontal Scroll Showcase
+  // Horizontal Scroll Showcase (desktop only, already hidden on mobile via CSS)
   const hSection = document.querySelector('.h-scroll-section');
   const hContainer = document.querySelector('.h-scroll-container');
   if (hSection && hContainer && window.innerWidth > 768) {
@@ -257,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  } // end !isMobile
 
   // Stats Counters & Rings
   const statsSection = document.querySelector('.stats');
@@ -317,18 +280,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- Feature Cards Glow Follow ---------- */
-  if (!isTouchDevice) {
+  /* ---------- Feature Cards Glow Follow (desktop only) ---------- */
+  if (!isTouchDevice && !isMobile) {
     document.querySelectorAll('.feature-card').forEach(card => {
       const glow = card.querySelector('.glow-blob');
       if (glow) {
         card.addEventListener('mousemove', (e) => {
           const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          glow.style.left = `${x}px`;
-          glow.style.top = `${y}px`;
-        });
+          glow.style.left = `${e.clientX - rect.left}px`;
+          glow.style.top = `${e.clientY - rect.top}px`;
+        }, { passive: true });
       }
     });
   }
@@ -403,16 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Back to Top Button ---------- */
-  const backToTop = document.getElementById('back-to-top');
   if (backToTop) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 500) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    });
-
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
