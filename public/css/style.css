@@ -27,11 +27,7 @@ ul { list-style:none; }
 button,input { font-family:inherit; border:none; outline:none; }
 
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; } }
-@media (max-width:768px) {
-  body.gsap-ready .g-reveal, body.gsap-ready .g-stagger, body.gsap-ready .reveal-item {
-    opacity:1!important; visibility:visible!important; transform:none!important;
-  }
-}
+/* Content is always visible - GSAP animates from offset positions but never hides content */
 
 /* Cursor */
 .cursor,.cursor-follower { position:fixed; top:0; left:0; pointer-events:none; border-radius:50%; z-index:9999; }
@@ -64,7 +60,9 @@ body.custom-cursor, body.custom-cursor a, body.custom-cursor button, body.custom
 .section-title { font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800; line-height:1.15; margin-bottom:16px; letter-spacing:-.02em; }
 .section-desc { font-size:1.05rem; color:var(--text-secondary); max-width:540px; margin:0 auto 48px; line-height:1.7; }
 .text-center { text-align:center; }
-body.gsap-ready .g-reveal, body.gsap-ready .g-stagger, body.gsap-ready .reveal-item { opacity:0; visibility:hidden; }
+/* GSAP visibility fallback: content is ALWAYS visible by default.
+   GSAP's fromTo() handles opacity:0 starting state only when GSAP is loaded.
+   If GSAP CDN fails/blocks, all content remains fully visible. */
 
 /* Buttons */
 .btn-primary { display:inline-flex; align-items:center; gap:10px; padding:14px 32px; border-radius:var(--radius-full); background:var(--gradient-primary); color:#fff; font-weight:700; font-size:1rem; transition:transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
@@ -127,7 +125,7 @@ body.gsap-ready .g-reveal, body.gsap-ready .g-stagger, body.gsap-ready .reveal-i
 /* FEATURES */
 .features { padding:100px 0 80px; }
 .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-.feature-card { background:var(--bg-card); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:32px 28px; transition:border-color .3s,transform .3s; }
+.feature-card { background:var(--bg-card); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:28px 24px; transition:border-color .3s,transform .3s; }
 .feature-card:hover { border-color:rgba(168,85,247,0.2); transform:translateY(-4px); }
 .feature-content { position:relative; z-index:1; }
 .feature-icon { width:52px; height:52px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; margin-bottom:20px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); }
@@ -146,7 +144,7 @@ body.gsap-ready .g-reveal, body.gsap-ready .g-stagger, body.gsap-ready .reveal-i
 /* HOW IT WORKS */
 .how-it-works { padding:100px 0 80px; }
 .steps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-.step-card { text-align:center; padding:36px 24px; background:var(--bg-card); border:1px solid var(--glass-border); border-radius:var(--radius-lg); transition:border-color .3s,transform .3s; }
+.step-card { text-align:center; padding:28px 20px; background:var(--bg-card); border:1px solid var(--glass-border); border-radius:var(--radius-lg); transition:border-color .3s,transform .3s; }
 .step-card:hover { border-color:rgba(34,211,238,0.2); transform:translateY(-4px); }
 .step-icon-wrap { width:56px; height:56px; border-radius:50%; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--neon-cyan); }
 .step-number { font-size:2.8rem; font-weight:900; color:rgba(255,255,255,0.03); line-height:1; margin-bottom:-12px; }
@@ -248,10 +246,12 @@ footer { border-top:1px solid rgba(255,255,255,0.04); padding:60px 0 32px; backg
   #mobile-menu { display:flex; }
   .nav-links { display:none; }
   .hamburger { display:flex; }
-  .features-grid,.stats-grid,.pricing-grid,.steps-grid { grid-template-columns:1fr; }
+  .features-grid,.stats-grid,.pricing-grid,.steps-grid { grid-template-columns:1fr; gap:12px; }
   .pricing-card.popular { transform:none; }
-  .footer-grid { grid-template-columns:1fr; gap:32px; }
-  .footer-bottom { flex-direction:column; gap:16px; text-align:center; }
+  .footer-grid { grid-template-columns:1fr 1fr; gap:24px; }
+  .footer-col h4 { margin-bottom:12px; }
+  .footer-col a { margin-bottom:8px; }
+  .footer-bottom { flex-direction:column; gap:12px; text-align:center; }
   .cursor,.cursor-follower { display:none!important; }
   .testimonial-text { font-size:1rem; }
   .carousel-track { height:340px; }
